@@ -1,20 +1,9 @@
-variable "project_id" {
-  type = string
-}
+variable "project_id"           { type = string }
+variable "region"               { type = string }
+variable "zone"                 { type = string }
+variable "vm_name"              { type = string }
 
-variable "region" {
-  type = string
-}
-
-variable "zone" {
-  type = string
-}
-
-variable "vm_name" {
-  type = string
-}
-
-# Windows Server (coincide con tu parámetro OS_TYPE)
+# OS (Windows Server)
 variable "os_type" {
   type    = string
   default = "Windows-server-2022-dc"
@@ -35,17 +24,9 @@ variable "processor_tech" {
 }
 
 # vm_type: "n2-standard" | "e2-standard" | "custom"
-variable "vm_type" {
-  type = string
-}
-
-variable "vm_cores" {
-  type = number
-}
-
-variable "vm_memory_gb" {
-  type = number
-}
+variable "vm_type"              { type = string }
+variable "vm_cores"             { type = number }
+variable "vm_memory_gb"         { type = number }
 
 # Disco
 variable "disk_type" {
@@ -55,57 +36,18 @@ variable "disk_type" {
     error_message = "disk_type debe ser pd-ssd | pd-balanced | pd-standard."
   }
 }
-
-variable "disk_size_gb" {
-  type = number
-}
-
-variable "auto_delete_disk" {
-  type    = bool
-  default = true
-}
+variable "disk_size_gb"         { type = number }
+variable "auto_delete_disk"     { type = bool  default = true }
 
 # Red
-variable "vpc_network" {
-  type = string
-}
-
-variable "subnet" {
-  type    = string
-  default = ""
-}
-
-variable "assign_public_ip" {
-  type = bool
-}
+variable "vpc_network"          { type = string }
+variable "subnet"               { type = string default = "" }
+variable "assign_public_ip"     { type = bool }
 
 # Opcionales
-variable "preemptible" {
-  type    = bool
-  default = false
-}
-
-variable "service_account" {
-  type    = string
-  default = ""
-}
-
-variable "deletion_protection" {
-  type    = bool
-  default = false
-}
-
-variable "labels" {
-  type    = map(string)
-  default = {}
-}
-
-variable "network_tags" {
-  type    = list(string)
-  default = []
-}
-
-variable "metadata" {
-  type    = map(string)
-  default = {}
-}
+variable "preemptible"          { type = bool  default = false }
+variable "service_account"      { type = string default = "" }
+variable "deletion_protection"  { type = bool  default = false }
+variable "labels"               { type = map(string)  default = {} }
+variable "network_tags"         { type = list(string) default = [] }
+variable "metadata"             { type = map(string)  default = {} }

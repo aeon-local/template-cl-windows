@@ -1,9 +1,8 @@
 #############################################
-# Locals (con ternario correcto)
+# Locals (ternario correcto con ":" )
 #############################################
 locals {
-  # Mapeo sencillo OS → (family, project) de imágenes oficiales de Google
-  # Referencia: proyectos 'windows-cloud' con familias windows-2019, windows-2022, windows-2025
+  # Mapeo OS → familia/proyecto de imágenes oficiales de Windows
   os_map = {
     "Windows-server-2025-dc" = { family = "windows-2025", project = "windows-cloud" }
     "Windows-server-2022-dc" = { family = "windows-2022", project = "windows-cloud" }
@@ -12,12 +11,11 @@ locals {
 
   selected_os = lookup(local.os_map, var.os_type, { family = "windows-2022", project = "windows-cloud" })
 
-  # Si vm_type == "custom" => n2|e2-custom-<vcpus>-<memoryMB>
-  # Si vm_type endswith "-standard" => usamos <processor>-standard-<vcpus>
-  # (Para series e2/n2, la memoria estándar viene dada por el tipo standard)
+  # Si vm_type == "custom" → <serie>-custom-<vcpus>-<memMB>
+  # Si termina en "-standard" → <serie>-standard-<vcpus>
   machine_type = var.vm_type == "custom"
     ? format("%s-custom-%d-%d", lower(var.processor_tech), var.vm_cores, var.vm_memory_gb * 1024)
-    : format("%s-standard-%d", lower(var.processor_tech), var.vm_cores)
+    : format("%s-standard-%d",    lower(var.processor_tech), var.vm_cores)
 }
 
 #############################################
@@ -61,14 +59,12 @@ resource "google_compute_instance" "vm" {
     }
   }
 
-  # Scheduling / Spot
   scheduling {
     preemptible        = var.preemptible
     automatic_restart  = var.preemptible ? false : true
     provisioning_model = var.preemptible ? "SPOT" : "STANDARD"
   }
 
-  # Cuenta de servicio
   service_account {
     email  = var.service_account != "" ? var.service_account : null
     scopes = ["https://www.googleapis.com/auth/cloud-platform"]

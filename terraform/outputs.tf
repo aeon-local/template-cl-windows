@@ -1,5 +1,5 @@
-output "instance_id" {
-  value = google_compute_instance.vm.id
+output "instance_name" {
+  value = google_compute_instance.vm.name
 }
 
 output "instance_self_link" {
@@ -7,10 +7,9 @@ output "instance_self_link" {
 }
 
 output "internal_ip" {
-  value = google_compute_instance.vm.network_interface[0].network_ip
+  value = try(google_compute_instance.vm.network_interface[0].network_ip, null)
 }
 
 output "external_ip" {
-  value       = try(google_compute_instance.vm.network_interface[0].access_config[0].nat_ip, null)
-  description = "Será null si assign_public_ip = false"
+  value = try(google_compute_instance.vm.network_interface[0].access_config[0].nat_ip, null)
 }

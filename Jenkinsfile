@@ -11,10 +11,10 @@ pipeline {
   parameters {
     choice(name: 'ACTION', choices: ['apply','destroy'], description: 'apply = crear/actualizar | destroy = eliminar')
     // -------- Proyecto / ubicación ----------
-    string(name: 'PROJECT_ID', defaultValue: 'jenkins-terraform-demo-472920', description: 'GCP Project ID')
+    string(name: 'PROJECT_ID', defaultValue: 'linear-time-471113-p5',      description: 'GCP Project ID')
     string(name: 'REGION',     defaultValue: 'us-central1',                description: 'Región (p.ej. us-central1, southamerica-west1)')
     string(name: 'ZONE',       defaultValue: 'us-central1-a',              description: 'Zona (p.ej. us-central1-a)')
-    string(name: 'WORKSPACE',  defaultValue: '',                            description: 'Workspace TF (vacío = vm-<VM_NAME>)')
+    string(name: 'WORKSPACE',  defaultValue: '',                           description: 'Workspace TF (vacío = vm-<VM_NAME>)')
 
     // -------- VM ----------
     string(name: 'VM_NAME',    defaultValue: 'win-demo',                    description: 'Nombre VM (minúsculas y guiones)')
